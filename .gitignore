@@ -1,0 +1,8 @@
+.env
+*/.run
+backend/.env.local
+frontend/.env.local
+
+.idea
+
+watchtower-config.json

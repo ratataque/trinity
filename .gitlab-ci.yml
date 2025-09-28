@@ -1,0 +1,24 @@
+include:
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
+  - local: "gitlab/Validate-Rules.yml"
+  - local: "gitlab/Build-and-Deploy.yml"
+  - local: "gitlab/Test.yml"
+  - local: "gitlab/Services.yml"
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event' && ($CI_MERGE_REQUEST_TARGET_BRANCH_NAME == 'dev' || $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == 'main')
+      when: always
+    - if: $CI_COMMIT_BRANCH == 'dev' || $CI_COMMIT_BRANCH == 'main'
+      when: always
+    - when: never
+
+stages:
+  - validate
+  - security
+  - install
+  - test
+  - build
+  - deploy
