@@ -5,3 +5,5 @@ flutter_*
 .nvim*
 pubspec.lock
 .env
+
+coverage/
